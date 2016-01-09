@@ -9,7 +9,7 @@ namespace DAShooter
         PlayerHealth playerHealth;      // Reference to the player's health.
         EnemyHealth enemyHealth;        // Reference to this enemy's health.
         NavMeshAgent nav;               // Reference to the nav mesh agent.
-
+		DungeonNavAgent navAgent;
 
         void Awake ()
         {
@@ -18,8 +18,8 @@ namespace DAShooter
             playerHealth = player.GetComponent <PlayerHealth> ();
             enemyHealth = GetComponent <EnemyHealth> ();
             nav = GetComponent <NavMeshAgent> ();
+			navAgent = GetComponent<DungeonNavAgent>();
         }
-
 
         void Update ()
         {
@@ -27,13 +27,13 @@ namespace DAShooter
             if(enemyHealth.currentHealth > 0 && playerHealth.currentHealth > 0)
             {
                 // ... set the destination of the nav mesh agent to the player.
-                nav.SetDestination (player.position);
+				navAgent.SetDestination (player.position);
             }
             // Otherwise...
             else
             {
                 // ... disable the nav mesh agent.
-                nav.enabled = false;
+				navAgent.enabled = false;
             }
         }
     }

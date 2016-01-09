@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 namespace DAShooter
 {
@@ -6,7 +7,7 @@ namespace DAShooter
     {
         public int startingHealth = 100;            // The amount of health the enemy starts the game with.
         public int currentHealth;                   // The current health the enemy has.
-        public float sinkSpeed = 2.5f;              // The speed at which the enemy sinks through the floor when dead.
+        public float sinkSpeed = 0.3f;              // The speed at which the enemy sinks through the floor when dead.
         public int scoreValue = 10;                 // The amount added to the player's score when the enemy dies.
         public AudioClip deathClip;                 // The sound to play when the enemy dies.
 
@@ -14,7 +15,7 @@ namespace DAShooter
         Animator anim;                              // Reference to the animator.
         AudioSource enemyAudio;                     // Reference to the audio source.
         ParticleSystem hitParticles;                // Reference to the particle system that plays when the enemy is damaged.
-        CapsuleCollider capsuleCollider;            // Reference to the capsule collider.
+        CharacterController character;            // Reference to the capsule collider.
         bool isDead;                                // Whether the enemy is dead.
         bool isSinking;                             // Whether the enemy has started sinking through the floor.
 
@@ -25,7 +26,7 @@ namespace DAShooter
             anim = GetComponent <Animator> ();
             enemyAudio = GetComponent <AudioSource> ();
             hitParticles = GetComponentInChildren <ParticleSystem> ();
-            capsuleCollider = GetComponent <CapsuleCollider> ();
+			character = GetComponent <CharacterController> ();
 
             // Setting the current health when the enemy first spawns.
             currentHealth = startingHealth;
@@ -77,7 +78,7 @@ namespace DAShooter
             isDead = true;
 
             // Turn the collider into a trigger so shots can pass through it.
-            capsuleCollider.isTrigger = true;
+			character.enabled = false;
 
             // Tell the animator that the enemy is dead.
             anim.SetTrigger ("Dead");
@@ -90,17 +91,25 @@ namespace DAShooter
 
         public void StartSinking ()
         {
-            // Find and disable the Nav Mesh Agent.
-            GetComponent <NavMeshAgent> ().enabled = false;
+			StartCoroutine(StartSinkingAnimation());
+		}
 
-            // The enemy should no sink.
+		IEnumerator StartSinkingAnimation() {
+            // Find and disable the Nav Mesh Agent.
+            GetComponent <DungeonNavAgent> ().enabled = false;
+
+			// Increase the score by the enemy's score value.
+			ScoreManager.score += scoreValue;
+
+			// Wait before we start sinking
+			yield return new WaitForSeconds(2.0f);
+
+            // Start sinking
             isSinking = true;
 
-            // Increase the score by the enemy's score value.
-            ScoreManager.score += scoreValue;
-
-            // After 2 seconds destory the enemy.
-            Destroy (gameObject, 2f);
+			// Wait until we sink before we destroy
+			yield return new WaitForSeconds(3.0f);
+            Destroy (gameObject);
         }
     }
 }
