@@ -27,14 +27,17 @@ GameObject:
   - 95: {fileID: 9500000}
   - 114: {fileID: 11400004}
   - 114: {fileID: 11400002}
-  - 114: {fileID: 11400000}
   - 82: {fileID: 8200000}
   - 114: {fileID: 11400006}
-  - 114: {fileID: 11416162}
   - 143: {fileID: 14378160}
+  - 135: {fileID: 13538172}
+  - 114: {fileID: 11416162}
+  - 114: {fileID: 11403076}
+  - 114: {fileID: 11496894}
+  - 114: {fileID: 11479256}
   m_Layer: 9
   m_Name: ZomBunny
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -109,7 +112,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 22.7228146, y: 1.92999995, z: -13.8841648}
+  m_LocalPosition: {x: 40.1300011, y: .0500000007, z: -14.5129995}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400004}
@@ -272,17 +275,6 @@ Light:
   m_ShadowRadius: 0
   m_ShadowAngle: 0
   m_AreaSize: {x: 1, y: 1}
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ea9a6ed18654d14db02bf0076cfe488, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -296,7 +288,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingHealth: 100
   currentHealth: 0
-  sinkSpeed: 2.5
+  sinkSpeed: .300000012
   scoreValue: 10
   deathClip: {fileID: 8300000, guid: 1d3bfb9269f136947bf8ac164cace1ff, type: 3}
 --- !u!114 &11400004
@@ -323,6 +315,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f58c1d9ce56e1749830b8aebe8ba3bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11403076
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0aa3e6f2a08d045e58c92770244b3cc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerProximityRadius: 3
+  hasPatrolling: 1
+  fieldOfView: 120
+  maxViewSight: 12
+  searchWaitTime: 3
+  playerCloseByDistance: 4
 --- !u!114 &11416162
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -336,14 +345,50 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: .5
   height: 1
-  maxAcceleration: 20
-  maxSpeed: 4
+  maxAcceleration: 8
+  maxSpeed: 3
   collisionQueryRange: 10
-  pathOptimizationRange: 10
-  separationWeight: 1
+  pathOptimizationRange: 20
+  separationWeight: 1.5
   gravity: -10
   character: {fileID: 0}
   UpdateFlags: 7
+--- !u!114 &11479256
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cebbf487be88f43f2af5a59e47d6a282, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minPathLength: 5
+  maxPathLength: 10
+--- !u!114 &11496894
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 051e6b348e0794175b58500263b7a753, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!135 &13538172
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100002}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: .800000012
+  m_Center: {x: 0, y: .5, z: 0}
 --- !u!137 &13700000
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -390,13 +435,13 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 1.20000005
-  m_Radius: .5
+  m_Height: 1.5
+  m_Radius: .400000006
   m_SlopeLimit: 45
   m_StepOffset: .300000012
   m_SkinWidth: .0799999982
   m_MinMoveDistance: .00100000005
-  m_Center: {x: 0, y: .600000024, z: 0}
+  m_Center: {x: 0, y: .75, z: 0}
 --- !u!198 &19800000
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -2575,6 +2620,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_NormalDirection
       value: .5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
