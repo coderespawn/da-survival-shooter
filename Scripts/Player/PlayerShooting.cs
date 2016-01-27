@@ -99,7 +99,7 @@ namespace DAShooter
             shootRay.direction = transform.forward;
 
             // Perform the raycast against gameobjects on the shootable layer and if it hits something...
-            if(Physics.Raycast (shootRay, out shootHit, range, shootableMask))
+            if(Physics.Raycast (shootRay, out shootHit, range))
             {
                 // Try and find an EnemyHealth script on the gameobject hit.
                 EnemyHealth enemyHealth = shootHit.collider.GetComponent <EnemyHealth> ();

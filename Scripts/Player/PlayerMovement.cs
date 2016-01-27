@@ -11,7 +11,6 @@ namespace DAShooter
 		CharacterController character;
         Vector3 movement;                   // The vector to store the direction of the player's movement.
         Animator anim;                      // Reference to the animator component.
-		Transform  transform;
         //Rigidbody playerRigidbody;          // Reference to the player's rigidbody.
 #if !MOBILE_INPUT
         //int floorMask;                      // A layer mask so that a ray can be cast just at gameobjects on the floor layer.
@@ -25,7 +24,6 @@ namespace DAShooter
             //floorMask = LayerMask.GetMask ("Floor");
 #endif
 
-			transform = gameObject.transform;
             // Set up references.
             anim = GetComponent <Animator> ();
 			character = GetComponent<CharacterController>();

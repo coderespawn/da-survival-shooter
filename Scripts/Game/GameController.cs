@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using DungeonArchitect;
 using DungeonArchitect.Utils;
+using DungeonArchitect.Navigation;
 
 namespace DAShooter {
 	public class GameController : MonoBehaviour {
@@ -90,21 +91,6 @@ namespace DAShooter {
 				}
 			}
 	    }
-
-		IEnumerator FadeScreen(float fadeTime, float startAlpha, float endAlpha) {
-			float startTime = Time.time;
-			float elapsedTime = 0;
-			while (elapsedTime < fadeTime) {
-				float currentTime = Time.time;
-				elapsedTime = currentTime - startTime;
-				float ratio = elapsedTime / fadeTime;
-				var alpha = Mathf.Lerp(startAlpha, endAlpha, ratio);
-				//FadeImage.SetAlpha(alpha);
-				yield return null;
-			}
-
-			yield return null;
-		}
 
 		public void RebuildNavigation() {
 	      navMesh.Build();
